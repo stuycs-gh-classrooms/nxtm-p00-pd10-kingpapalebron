@@ -39,7 +39,7 @@ F = (m * Δv) / Δt
   - velocity
 
 - Does this force require any new constants, if so what are they and what values will you try initially?
-  - time
+  - time with an initial value of 0.1 seconds
 
 - Does this force require any new information to be added to the `Orb` class? If so, what is it and what data type will you use?
   - time will be a float
