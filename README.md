@@ -55,31 +55,33 @@ F = (m * Δv) / Δt
 ### Simulation 1: Gravity
 Describe how you will attempt to simulate orbital motion.
 
+We will create eight orbs at the center of the screen with a fixed orb located at in between the other eight orbs called sun and calculate the attraction force for each orb in the array based off the orb in the center.
+
 --- 
 
 ### Simulation 2: Spring
 Describe what your spring simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-YOUR ANSWER HERE
+There will be a four regular orbs created randomly around the screen and a fixed orb in the middle of the screen and the beginning of the array. Each orb will have a spring attatched to each of the orbs next to it. The orbs should bounce around the screen with each orb pulling on the orbs next to it through the springs attatched between the orbs.
 
 --- 
 
 ### Simulation 3: Drag
 Describe what your drag simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-YOUR ANSWER HERE
+There will be five orbs created at the top of the screen. There will be "water" from the middle of the screen to the bottom. The orbs will experience drag force while in the water.
 
 --- 
 
 ### Simulation 4: Custom force
 Describe what your Custom force simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-YOUR ANSWER HERE
+There will be five orbs spawned randomly around the screen. They will be given velocities with the same magnitude but a random direction. When the orbs collide they should bounce off each other instead of overlapping.
 
 --- 
 
 ### Simulation 5: Combination
 Describe what your combination simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-YOUR ANSWER HERE
+The simulation will have earth gravity, collision, and drag force. The orbs will be created randomly on the screen with velocities of the same magnitude but random directions. There will still be "water" covering the bottom half of the screen and orbs can spawn in the water.
 
