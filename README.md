@@ -26,7 +26,7 @@ All projects will require the following:
 ## Phase 0: Force Selection, Analysis & Plan
 ---------- 
 
-#### Custom Force: orbCollision
+#### Custom Force: electricFieldForce
 
 ### Forumla
 What is the formula for your force? Including descriptions/definitions for the symbols. (You may include a picture of the formula if it is not easily typed.)
@@ -35,20 +35,19 @@ F = $`(k*q*Q)/r^2`$
 
 ### Custom Force
 - What information that is already present in the `Orb` or `OrbNode` classes does this force use?
-  - mass
-  - velocity
+  - center
 
 - Does this force require any new constants, if so what are they and what values will you try initially?
-  - time with an initial value of 0.1 seconds
+  - this force needs Coulombs constant(k) and it will be 0.1 for our inital tests
 
 - Does this force require any new information to be added to the `Orb` class? If so, what is it and what data type will you use?
-  - time will be a float
+  - charge will be a float
 
 - Does this force interact with other `Orbs`, or is it applied based on the environment?
   - other orbs
 
 - In order to calculate this force, do you need to perform extra intermediary calculations? If so, what?
-  - no
+  - we need to find the distance between the calling orb and another orb
 
 --- 
 
@@ -76,12 +75,12 @@ There will be five orbs created at the top of the screen. There will be "water" 
 ### Simulation 4: Custom force
 Describe what your Custom force simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-There will be five orbs spawned randomly around the screen. They will be given velocities with the same magnitude but a random direction. When the orbs collide they should bounce off each other instead of overlapping.
+There will be five orbs created randomly around the screen and one fixed orb created in the center. The electric field created by the fixed orb should push the other orbs away.
 
 --- 
 
 ### Simulation 5: Combination
 Describe what your combination simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-The simulation will have earth gravity, collision, and drag force. The orbs will be created randomly on the screen with velocities of the same magnitude but random directions. There will still be "water" covering the bottom half of the screen and orbs can spawn in the water.
+The simulation will have earth gravity, electric field force, and drag force. The orbs will be created randomly on the screen. There will still be "water" covering the bottom half of the screen and orbs can spawn in the water. The simulation should behave the same as the other simulations but with more forces acting on each orb.
 
