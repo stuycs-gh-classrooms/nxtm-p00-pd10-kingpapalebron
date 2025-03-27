@@ -12,30 +12,36 @@ float  SPRING_K = 0.005;
 
 int MOVING = 0;
 int BOUNCE = 1;
-int GRAVITY = 2;
+int ATTRACTION = 2;
 int SPRING = 3;
-int DRAGF = 4;
-int FIELD = 5;
+int GRAVITY = 4;
+int DRAGF = 5;
+int FIELD = 6;
 
-boolean[] toggles = new boolean[6];
-String[] modes = {"Moving", "Bounce", "Gravity", "Spring", "Drag", "Field"};
+boolean[] toggles = new boolean[7];
+String[] modes =
+  {"Moving", "Bounce", "Attraction", "Spring", "Gravity", "Drag", "Field"};
 
-String simulation = "Gravity";
+String simulation = "Attraction";
 
 FixedOrb earth;
+FixedOrb sun;
 FixedOrb sourceCharge;
 
 OrbList slinky;
+ArrayList<Orb> orbs = new ArrayList<Orb>(NUM_ORBS);
 
 void setup() {
   size(600, 600);
 
   earth = new FixedOrb(width/2, height * 200, 1, 20000);
+  sun = new FixedOrb(width/2, height/2, MAX_SIZE, MAX_MASS);
+  sun.c = color(255, 255, 102);
   sourceCharge = new FixedOrb(width/2, height/2,
-      random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+    random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
 
   slinky = new OrbList();
-  slinky.populate(NUM_ORBS, true);
+  createArray();
 }//setup
 
 void draw() {
@@ -45,25 +51,34 @@ void draw() {
   textAlign(RIGHT, TOP);
   stroke(0);
   text(simulation, width, 0);
-  slinky.display();
+  if (simulation != "Attraction") {
+    slinky.display();
+  }
   if (toggles[FIELD]) {
-   sourceCharge.display(); 
+    sourceCharge.display();
   }
 
-  if (simulation == "Gravity") {
-    toggles[GRAVITY] = true;
+  if (simulation == "Attraction") {
+    toggles[ATTRACTION] = true;
     toggles[SPRING] = false;
+    toggles[GRAVITY] = false;
     toggles[DRAGF] = false;
     toggles[FIELD] = false;
+    for (int i = 0; i < orbs.size(); i++) {
+      orbs.get(i).display();
+    }
     if (toggles[MOVING]) {
-      slinky.run(toggles[BOUNCE]);
-      slinky.applyGravity(earth, G_CONSTANT);
+      for (int i = 0; i < orbs.size(); i++) {
+        orbs.get(i).move(toggles[BOUNCE]);
+        orbs.get(i).applyForce(orbs.get(i).getGravity(sun, G_CONSTANT));
+      }
     }
   }
 
   if (simulation == "Spring Force") {
-    toggles[GRAVITY] = false;
+    toggles[ATTRACTION] = false;
     toggles[SPRING] = true;
+    toggles[GRAVITY] = false;
     toggles[DRAGF] = false;
     toggles[FIELD] = false;
     if (toggles[MOVING]) {
@@ -73,7 +88,7 @@ void draw() {
   }
 
   if (simulation == "Drag") {
-    toggles[GRAVITY] = false;
+    toggles[ATTRACTION] = false;
     toggles[SPRING] = false;
     toggles[DRAGF] = true;
     toggles[FIELD] = false;
@@ -84,8 +99,9 @@ void draw() {
   }
 
   if (simulation == "Field Force") {
-    toggles[GRAVITY] = false;
+    toggles[ATTRACTION] = false;
     toggles[SPRING] = false;
+    toggles[GRAVITY] = false;
     toggles[DRAGF] = false;
     toggles[FIELD] = true;
     if (toggles[MOVING]) {
@@ -95,7 +111,7 @@ void draw() {
   }
 
   if (simulation == "Combination") {
-    toggles[GRAVITY] = true;
+    toggles[ATTRACTION] = true;
     toggles[SPRING] = true;
     toggles[DRAGF] = true;
     toggles[FIELD] = true;
@@ -122,29 +138,59 @@ void keyPressed() {
   if (key == 'b') {
     toggles[BOUNCE] = !toggles[BOUNCE];
   }
+  if (key == 'g' && (simulation == "Drag" || simulation == "Combination")) {
+    toggles[GRAVITY] =  !toggles[GRAVITY];
+  }
   if (key == '=' || key =='+') {
     slinky.addFront(new OrbNode());
+    orbs.add(new Orb());
   }
   if (key == '-') {
     slinky.removeFront();
+    orbs.remove(orbs.size());
   }
   if (key == '1') {
-    simulation = "Gravity";
+    simulation = "Attraction";
+    for (int i = orbs.size() - 1; i>= 0; i--) {
+      orbs.remove(i);
+    }
+    createArray();
   }
   if (key == '2') {
     simulation = "Spring Force";
+    slinky.populate(NUM_ORBS, false);
   }
   if (key == '3') {
     simulation = "Drag";
+    slinky.populate(NUM_ORBS, false);
+    toggles[GRAVITY] = true;
   }
   if (key == '4') {
     simulation = "Field Force";
+    slinky.populate(NUM_ORBS, false);
   }
   if (key == '5') {
     simulation = "Combination";
+    slinky.populate(NUM_ORBS, false);
+    toggles[GRAVITY] = true;
   }
 }//keyPressed
 
+void createArray() {
+  for (int i = 0; i < NUM_ORBS/2 - 1; i++) {
+    float size = random(MIN_SIZE, MAX_SIZE);
+    float mass = random(MIN_MASS, MAX_MASS);
+    orbs.add(new Orb(width/NUM_ORBS + (SPRING_LENGTH * (i+1)),
+      random(height*0.25, height*0.75), size, mass));
+  }
+  orbs.add(sun);
+  for (int i = NUM_ORBS/2; i < NUM_ORBS; i++) {
+    float size = random(MIN_SIZE, MAX_SIZE);
+    float mass = random(MIN_MASS, MAX_MASS);
+    orbs.add(new Orb(width/NUM_ORBS + (SPRING_LENGTH * (i+1)),
+      random(height*0.25, height*0.75), size, mass));
+  }
+}
 
 void displayMode() {
   textAlign(LEFT, TOP);
