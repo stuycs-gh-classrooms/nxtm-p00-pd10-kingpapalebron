@@ -5,7 +5,7 @@ float MIN_MASS = 10;
 float MAX_MASS = 100;
 float G_CONSTANT = 1;
 float D_COEF = 0.1;
-float K_CONSTANT = 1;
+float K_CONSTANT = 8.99 * pow(10, 4);
 
 int SPRING_LENGTH = 50;
 float  SPRING_K = 0.005;
