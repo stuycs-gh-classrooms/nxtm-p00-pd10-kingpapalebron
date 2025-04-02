@@ -70,7 +70,7 @@ class Orb {
   }
   
   PVector getElectricForce(Orb other, float K) {
-    float strength = K * charge * other.charge;
+    float strength = K * charge * other.charge * -1;
     float r = max(center.dist(other.center), MIN_SIZE);
     strength = strength / pow(r, 2);
     PVector force = other.center.copy();
