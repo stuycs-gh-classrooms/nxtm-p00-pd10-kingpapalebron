@@ -58,6 +58,10 @@ void draw() {
     sourceCharge.display();
   }
 
+  if(toggles[ATTRACTION]) {
+   sun.display(); 
+  }
+
   if (simulation == "Attraction") {
     toggles[ATTRACTION] = true;
     toggles[SPRING] = false;
