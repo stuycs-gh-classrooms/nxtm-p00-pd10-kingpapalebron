@@ -37,8 +37,6 @@ void setup() {
   earth = new FixedOrb(width/2, height * 200, 1, 20000);
   sun = new FixedOrb(width/2, height/2, MAX_SIZE, MAX_MASS);
   sun.c = color(255, 255, 102);
-  sourceCharge = new FixedOrb(width/2, height/2,
-    random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
 
   slinky = new OrbList();
   createArray();
@@ -56,6 +54,7 @@ void draw() {
   }
   if (toggles[FIELD]) {
     slinky.setChargeColor();
+    sourceCharge.c = color(0, 0, 255);
     sourceCharge.display();
   }
   if (!toggles[FIELD]) {
@@ -202,10 +201,14 @@ void keyPressed() {
   if (key == '4') {
     simulation = "Field Force";
     slinky.populate(NUM_ORBS, false);
+    sourceCharge = new FixedOrb(width/2, height/2,
+      random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
   }
   if (key == '5') {
     simulation = "Combination";
     slinky.populate(NUM_ORBS, false);
+    sourceCharge = new FixedOrb(width/2, height/2,
+      random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
     toggles[GRAVITY] = true;
   }
 }//keyPressed
