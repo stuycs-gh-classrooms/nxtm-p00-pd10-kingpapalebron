@@ -4,7 +4,7 @@ int MAX_SIZE = 60;
 float MIN_MASS = 10;
 float MAX_MASS = 100;
 float G_CONSTANT = 0.7;
-float D_COEF = 0.3;
+float D_COEF = 1;
 float K_CONSTANT = 8.99 * pow(10, 4);
 
 int SPRING_LENGTH = 50;
