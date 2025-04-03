@@ -35,7 +35,7 @@ void setup() {
   size(600, 600);
 
   earth = new FixedOrb(width/2, height * 200, 1, 20000);
-  sun = new FixedOrb(width/2, height/2, MAX_SIZE, MAX_MASS);
+  sun = new FixedOrb(width/2, height/2, 100, 160);
   sun.c = color(255, 255, 102);
 
   slinky = new OrbList();
