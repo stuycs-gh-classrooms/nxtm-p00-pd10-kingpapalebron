@@ -52,6 +52,21 @@ class OrbList {
     }
   }//display
 
+  void setChargeColor() {
+    OrbNode currentOrb = front;
+    while (currentOrb != null) {
+      currentOrb.setChargeColor();
+      currentOrb = currentOrb.next;
+    }
+  }
+  void setColor() {
+    OrbNode currentOrb = front;
+    while (currentOrb != null) {
+      currentOrb.setColor();
+      currentOrb = currentOrb.next;
+    }
+  }
+
   void applySprings(int springLength, float springK) {
     OrbNode currentOrb = front;
     while (currentOrb != null) {
@@ -79,10 +94,11 @@ class OrbList {
   void applyDrag(float cd) {
     OrbNode currentOrb = front;
     while (currentOrb != null) {
-      if (currentOrb.center.y + currentOrb.bsize > height/3 * 2) {
+      if (currentOrb.center.y + currentOrb.bsize < height/2 &&
+        currentOrb.center.x + currentOrb.bsize > width/2) {
         currentOrb.applyForce(currentOrb.getDragForce(3 * cd));
-      } else if (currentOrb.center.y + currentOrb.bsize > height/3 &&
-      currentOrb.center.y + currentOrb.bsize < height/3 * 2) {
+      } else if (currentOrb.center.y + currentOrb.bsize > height/2 &&
+        currentOrb.center.x + currentOrb.bsize < width/2) {
         currentOrb.applyForce(currentOrb.getDragForce(2 * cd));
       } else {
         currentOrb.applyForce(currentOrb.getDragForce(cd));

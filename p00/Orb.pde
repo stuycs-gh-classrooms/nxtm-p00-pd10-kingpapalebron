@@ -11,26 +11,32 @@ class Orb {
 
 
   Orb() {
-     bsize = random(10, MAX_SIZE);
-     float x = random(bsize/2, width-bsize/2);
-     float y = random(bsize/2, height-bsize/2);
-     center = new PVector(x, y);
-     mass = random(10, 100);
-     velocity = new PVector();
-     acceleration = new PVector();
-     setColor();
-     charge = random(-1, 1);
+    bsize = random(10, MAX_SIZE);
+    float x = random(bsize/2, width-bsize/2);
+    float y = random(bsize/2, height-bsize/2);
+    center = new PVector(x, y);
+    mass = random(10, 100);
+    velocity = new PVector();
+    acceleration = new PVector();
+    setColor();
+    charge = random(-1, 1);
+    if (charge == 0) {
+      charge = -0.01;
+    }
   }
 
   Orb(float x, float y, float s, float m) {
-     bsize = s;
-     mass = m;
-     center = new PVector(x, y);
-     velocity = new PVector();
-     acceleration = new PVector();
-     setColor();
-     charge = random(-1, 1);
-   }
+    bsize = s;
+    mass = m;
+    center = new PVector(x, y);
+    velocity = new PVector();
+    acceleration = new PVector();
+    setColor();
+    charge = random(-1, 1);
+    if (charge == 0) {
+      charge = -0.01;
+    }
+  }
 
   //movement behavior
   void move(boolean bounce) {
@@ -68,7 +74,7 @@ class Orb {
     force.mult(strength);
     return force;
   }
-  
+
   PVector getElectricForce(Orb other, float K) {
     float strength = K * charge * other.charge * -1;
     float r = max(center.dist(other.center), MIN_SIZE);
@@ -92,7 +98,7 @@ class Orb {
     return direction;
   }//getSpring
 
-  boolean yBounce(){
+  boolean yBounce() {
     if (center.y > height - bsize/2) {
       velocity.y *= -1;
       center.y = height - bsize/2;
@@ -111,8 +117,7 @@ class Orb {
       center.x = width - bsize/2;
       velocity.x *= -1;
       return true;
-    }
-    else if (center.x < bsize/2) {
+    } else if (center.x < bsize/2) {
       center.x = bsize/2;
       velocity.x *= -1;
       return true;
@@ -122,7 +127,7 @@ class Orb {
 
   boolean collisionCheck(Orb other) {
     return ( this.center.dist(other.center)
-             <= (this.bsize/2 + other.bsize/2) );
+      <= (this.bsize/2 + other.bsize/2) );
   }//collisionCheck
 
   boolean isSelected(float x, float y) {
@@ -136,6 +141,14 @@ class Orb {
     c = lerpColor(c0, c1, (mass-MIN_SIZE)/(MAX_MASS-MIN_SIZE));
   }//setColor
 
+  void setChargeColor() {
+    if (charge < 0) {
+      c = color(255, 0, 0);
+    } else {
+      c = color(0, 255, 0);
+    }
+  }
+
   //visual behavior
   void display() {
     noStroke();
@@ -143,7 +156,15 @@ class Orb {
     circle(center.x, center.y, bsize);
     fill(0);
     textSize(20);
-    text(str(charge), center.x, center.y);
+    String symbol;
+    if (charge < 0) {
+      symbol = "-";
+    } else {
+      symbol = "+";
+    }
+    textAlign(CENTER, CENTER);
+    if (toggles[FIELD]) {
+      text(symbol, center.x, center.y);
+    }
   }//display
-
 }//Orb

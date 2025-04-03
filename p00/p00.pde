@@ -3,7 +3,7 @@ int MIN_SIZE = 10;
 int MAX_SIZE = 60;
 float MIN_MASS = 10;
 float MAX_MASS = 100;
-float G_CONSTANT = 1;
+float G_CONSTANT = 0.7;
 float D_COEF = 0.3;
 float K_CONSTANT = 8.99 * pow(10, 4);
 
@@ -55,11 +55,15 @@ void draw() {
     slinky.display();
   }
   if (toggles[FIELD]) {
+    slinky.setChargeColor();
     sourceCharge.display();
   }
+  if (!toggles[FIELD]) {
+    slinky.setColor();
+  }
 
-  if(toggles[ATTRACTION]) {
-   sun.display(); 
+  if (toggles[ATTRACTION]) {
+    sun.display();
   }
 
   if (simulation == "Attraction") {
@@ -97,9 +101,14 @@ void draw() {
     toggles[DRAGF] = true;
     toggles[FIELD] = false;
     fill(0, 0, 255);
-    rect(0, height/3 * 2, width, height/3);
-    fill(0, 255, 0);
-    rect(0, height/3, width, height/3);
+    rect(width/2, 0, width/2, height/2);
+    fill(240, 230, 140);
+    rect(0, height/2, width/2, height/2);
+    textSize(30);
+    textAlign(RIGHT, TOP);
+    fill(0);
+    text(simulation, width, 0);
+    displayMode();
     if (toggles[MOVING]) {
       slinky.run(toggles[BOUNCE]);
       if (toggles[GRAVITY]) {
@@ -128,9 +137,14 @@ void draw() {
     toggles[DRAGF] = true;
     toggles[FIELD] = true;
     fill(0, 0, 255);
-    rect(0, height/3 * 2, width, height/3);
-    fill(0, 255, 0);
-    rect(0, height/3, width, height/3);
+    rect(width/2, 0, width/2, height/2);
+    fill(240, 230, 140);
+    rect(0, height/2, width/2, height/2);
+    textSize(30);
+    textAlign(RIGHT, TOP);
+    fill(0);
+    text(simulation, width, 0);
+    displayMode();
     if (toggles[MOVING]) {
       slinky.run(toggles[BOUNCE]);
       if (toggles[GRAVITY]) {
