@@ -67,9 +67,9 @@ void draw() {
 
   if (simulation == "Attraction") {
     toggles[ATTRACTION] = true;
-    toggles[SPRING] = false;
-    toggles[GRAVITY] = false;
-    toggles[DRAGF] = false;
+    //toggles[SPRING] = false;
+    //toggles[GRAVITY] = false;
+    //toggles[DRAGF] = false;
     toggles[FIELD] = false;
     for (int i = 0; i < orbs.size(); i++) {
       orbs.get(i).display();
@@ -83,10 +83,10 @@ void draw() {
   }
 
   if (simulation == "Spring Force") {
-    toggles[ATTRACTION] = false;
+    //toggles[ATTRACTION] = false;
     toggles[SPRING] = true;
-    toggles[GRAVITY] = false;
-    toggles[DRAGF] = false;
+    //toggles[GRAVITY] = false;
+    //toggles[DRAGF] = false;
     toggles[FIELD] = false;
     if (toggles[MOVING]) {
       slinky.run(toggles[BOUNCE]);
@@ -95,8 +95,8 @@ void draw() {
   }
 
   if (simulation == "Drag") {
-    toggles[ATTRACTION] = false;
-    toggles[SPRING] = false;
+    //toggles[ATTRACTION] = false;
+    //toggles[SPRING] = false;
     toggles[DRAGF] = true;
     toggles[FIELD] = false;
     fill(0, 0, 255);
@@ -119,10 +119,10 @@ void draw() {
   }
 
   if (simulation == "Field Force") {
-    toggles[ATTRACTION] = false;
-    toggles[SPRING] = false;
-    toggles[GRAVITY] = false;
-    toggles[DRAGF] = false;
+    //toggles[ATTRACTION] = false;
+    //toggles[SPRING] = false;
+    //toggles[GRAVITY] = false;
+    //toggles[DRAGF] = false;
     toggles[FIELD] = true;
     if (toggles[MOVING]) {
       slinky.run(toggles[BOUNCE]);
@@ -171,8 +171,17 @@ void keyPressed() {
   if (key == 'b') {
     toggles[BOUNCE] = !toggles[BOUNCE];
   }
-  if (key == 'g' && (simulation == "Drag" || simulation == "Combination")) {
+  if (key == 'g') {
     toggles[GRAVITY] =  !toggles[GRAVITY];
+  }
+  if (key == 's') {
+    toggles[SPRING] = !toggles[SPRING];
+  }
+  if (key == 'd') {
+    toggles[DRAGF] = !toggles[DRAGF];
+  }
+  if (key == 'a') {
+    toggles[ATTRACTION] = !toggles[ATTRACTION];
   }
   if (key == '=' || key =='+') {
     slinky.addFront(new OrbNode());
